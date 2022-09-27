@@ -7,6 +7,12 @@ type NewTodo struct {
 	UserID string `json:"userId"`
 }
 
+type RenewTodo struct {
+	Text string `json:"text"`
+	ID   int    `json:"id"`
+	Done bool   `json:"done"`
+}
+
 type User struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`

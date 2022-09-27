@@ -6,7 +6,6 @@ package graph
 import (
 	"context"
 	"fmt"
-	"math/rand"
 
 	"github.com/fuzztarou/gqlgen-todos/graph/generated"
 	"github.com/fuzztarou/gqlgen-todos/graph/model"
@@ -16,10 +15,19 @@ import (
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
 	todo := &model.Todo{
 		Text:   input.Text,
-		ID:     fmt.Sprintf("T%d", rand.Int()),
+		ID:     fmt.Sprintf("T%d", len(r.todos)), //スライスの要素数をIDにした
 		UserID: input.UserID,
 	}
 	r.todos = append(r.todos, todo)
+	return todo, nil
+}
+
+// UpdateTodo is the resolver for the updateTodo field.
+func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.RenewTodo) (*model.Todo, error) {
+	todo := r.todos[input.ID]
+	todo.Text = input.Text
+	todo.Done = input.Done
+	r.todos[input.ID] = todo
 	return todo, nil
 }
 
