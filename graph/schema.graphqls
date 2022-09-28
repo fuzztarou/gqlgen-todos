@@ -29,7 +29,12 @@ input RenewTodo {
   done: Boolean!
 }
 
+input DeleteTodo {
+  id: Int!
+}
+
 type Mutation {
   createTodo(input: NewTodo!): Todo!
   updateTodo(input: RenewTodo!): Todo!
+  deleteTodo(input: DeleteTodo!): Todo!
 }

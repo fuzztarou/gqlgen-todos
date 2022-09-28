@@ -31,6 +31,19 @@ func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.RenewTodo
 	return todo, nil
 }
 
+// DeleteTodo is the resolver for the deleteTodo field.
+func (r *mutationResolver) DeleteTodo(ctx context.Context, input model.DeleteTodo) (*model.Todo, error) {
+	todo := &model.Todo{
+		Text:   "",
+		ID:     "",
+		UserID: "",
+		Done:   false,
+		User:   &model.User{ID: "", Name: ""},
+	}
+	r.todos[input.ID] = todo
+	return r.todos[input.ID], nil
+}
+
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	return r.todos, nil
@@ -38,7 +51,7 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 
 // User is the resolver for the user field.
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	return &model.User{ID: obj.UserID, Name: "user " + obj.UserID}, nil
+	return &model.User{ID: obj.UserID, Name: "" + obj.UserID}, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
